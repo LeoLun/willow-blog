@@ -1,0 +1,11 @@
+.VPDocFooter {
+  display: none;
+}
+
+svg[id^="mermaid"] {
+  margin: 16px auto;
+}
+
+img {
+  margin: 16px auto;
+}
