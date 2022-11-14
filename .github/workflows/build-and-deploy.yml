@@ -20,15 +20,17 @@ jobs:
       - name: Check out your repository using git
         uses: actions/checkout@v3
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+
       - name: Use Node.js 16
         uses: actions/setup-node@v3
         with:
           node-version: '16'
           cache: 'pnpm'
-          cache-dependency-path: '**/pnpm-lock.yaml'
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
 
       - name: Build
         run: npm run docs:build
