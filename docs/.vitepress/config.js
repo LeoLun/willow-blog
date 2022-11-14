@@ -14,17 +14,17 @@ const getConfig = async () => {
       outDir: '../dist',
       titleTemplate: 'blog',
       head: [
-        ['link', {rel:'icon', type: 'image/svg+xml', href:'/logo.svg'}],
-        ['link', {rel:'stylesheet', href:'/index.css'}],
-        // ['script', {type:'text/javascript'}, PageInfo]
+        ['link', {rel:'icon', type: 'image/svg+xml', href:'/willow-blog/logo.svg'}],
+        ['link', {rel:'stylesheet', href:'/willow-blog/index.css'}],
       ],
       themeConfig: {
         outlineTitle: '目录',
         pages: await CreatePages(),
-        // nav: [
-        //   { text: '标签', link: '/pages/local-https-debug' },
-        //   { text: '归档', link: '/pages/how-to-use-github-actions-deploy-github-pages' }
-        // ],
+        nav: [
+          { text: '标签', link: '/tags' },
+          { text: '归档', link: '/archive' },
+          // { text: '归档', link: '/pages/how-to-use-github-actions-deploy-github-pages' }
+        ],
       },
       // your existing vitepress config...
       // optionally, you can pass MermaidConfig

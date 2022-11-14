@@ -1,11 +1,10 @@
 <script setup>
 import { ref } from 'vue';
 import { useData } from 'vitepress';
-import PageListItem from './PageListItem.vue';
+import PageListItem from '../components/PageListItem.vue';
 
-const { theme, localePath } = useData();
+const { theme } = useData();
 
-console.log('localePath', localePath.value)
 const pageInfo = ref(theme.value.pages);
 
 </script>

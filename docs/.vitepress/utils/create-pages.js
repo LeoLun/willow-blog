@@ -1,6 +1,9 @@
 import fs from 'fs'
 import path from 'path'
+import childProcess from 'child_process'
 import matter from 'gray-matter'
+
+const execSync = childProcess.execSync;
 
 export default async () => {
 
@@ -18,18 +21,21 @@ export default async () => {
       const content = fs.readFileSync(filePath, "utf-8");
       const { data } = matter(content);
 
+      // 获取文件创建和更新时间
+      const update = execSync(`echo "$(git log -1 --pretty=format:"%ad" -- ${filePath})"`, {encoding: "utf-8"});
+      const create = execSync(`echo "$(git log --pretty=format:"%ad" -- ${filePath} | tail -1)"`, {encoding: "utf-8"});
       pages.push({
         title: data.title || '',
         tags: data.tags ? data.tags.split(',') : [],
         relativePath: `pages/${fileName}`,
         url: `pages/${fileName.slice(0, -3)}`,
-        create: (new Date('Sat Nov 12 2022 17:25:15 GMT+0800')).getTime(),
-        update: (new Date('Sat Nov 12 2022 17:25:15 GMT+0800')).getTime()
+        create: (new Date(create)).getTime(),
+        update: (new Date(update)).getTime()
       })
     }
   })
 
   // 排序
-
+  pages.sort((a, b) => b.create - a.create);
   return pages
 }
