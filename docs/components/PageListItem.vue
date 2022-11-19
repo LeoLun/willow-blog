@@ -47,7 +47,7 @@ const handleOpenPage = () => {
 .page-item-container {
   display: flex;
   flex-direction: column;
-  width: 800px;
+  width: 100%;
   margin: auto;
   padding: 16px 0;
   border-bottom: 1px solid var(--vp-c-divider-light);

@@ -22,8 +22,6 @@ const getConfig = async () => {
         pages: await CreatePages(),
         nav: [
           { text: '标签', link: '/tags' },
-          { text: '归档', link: '/archive' },
-          // { text: '归档', link: '/pages/how-to-use-github-actions-deploy-github-pages' }
         ],
       },
       // your existing vitepress config...
