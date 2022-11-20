@@ -20,7 +20,8 @@ export default async () => {
       const filePath = path.resolve(rootPath, `./${fileName}`);
       const content = fs.readFileSync(filePath, "utf-8");
       const { data } = matter(content);
-
+      console.log('filePath', filePath);
+      console.log('create', execSync(`echo "$(git log --pretty=format:"%ad" -- ${filePath} | tail -1)"`, {encoding: "utf-8"}));
       // 获取文件创建和更新时间
       let update = execSync(`echo "$(git log -1 --pretty=format:"%ad" -- ${filePath})"`, {encoding: "utf-8"});
       let create = execSync(`echo "$(git log --pretty=format:"%ad" -- ${filePath} | tail -1)"`, {encoding: "utf-8"});
