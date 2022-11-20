@@ -22,8 +22,11 @@ export default async () => {
       const { data } = matter(content);
 
       // 获取文件创建和更新时间
-      const update = execSync(`echo "$(git log -1 --pretty=format:"%ad" -- ${filePath})"`, {encoding: "utf-8"});
-      const create = execSync(`echo "$(git log --pretty=format:"%ad" -- ${filePath} | tail -1)"`, {encoding: "utf-8"});
+      let update = execSync(`echo "$(git log -1 --pretty=format:"%ad" -- ${filePath})"`, {encoding: "utf-8"});
+      let create = execSync(`echo "$(git log --pretty=format:"%ad" -- ${filePath} | tail -1)"`, {encoding: "utf-8"});
+      update = update.trim() ? update.trim() : Date.now();
+      create = create.trim() ? create.trim() : Date.now();
+
       pages.push({
         title: data.title || '',
         tags: data.tags ? data.tags.split(',') : [],
