@@ -1,8 +1,8 @@
 ---
-title: vite 图片使用
+title: Vite 图片使用
 tags: vite,vite-plugin
 ---
-# vite 图片处理
+# Vite 图片处理
 
 ## 介绍
 图片使用主要分为三种方式:
