@@ -17,8 +17,14 @@ const formatTime = (time) => {
   const year = timeDate.getFullYear();
   const month = timeDate.getMonth() + 1;
   const day = timeDate.getDate();
-  const house = timeDate.getHours();
-  const minutes = timeDate.getMinutes();
+  let house = timeDate.getHours();
+  let minutes = timeDate.getMinutes();
+  if (house < 10) {
+    house = `0${house}`
+  }
+  if (minutes < 10) {
+    minutes = `0${minutes}`
+  }
   return `${year}年${month}月${day}日 ${house}:${minutes}`;
 }
 
