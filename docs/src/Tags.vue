@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useData } from 'vitepress';
 import PageListItem from '../components/PageListItem.vue';
 import Tag from '../components/Tag.vue';
@@ -9,10 +9,12 @@ const { theme } = useData();
 const tags = {}
 const currentTag = ref('');
 
+let firstTag = '';
+
 theme.value.pages.forEach((item) => {
   item.tags.forEach((tag) => {
-    if (!currentTag.value) {
-      currentTag.value = tag
+    if (!firstTag) {
+      firstTag = tag
     }
     if (tags[tag]) {
       tags[tag]++;
@@ -20,6 +22,18 @@ theme.value.pages.forEach((item) => {
       tags[tag] = 1;
     }
   })
+})
+
+
+onMounted(() => {
+  const url = new URL(location.href);
+  const tag = url.searchParams.get('tag');
+
+  if (tag && Object.keys(tags).includes(tag)) {
+    currentTag.value = tag
+  } else {
+    currentTag.value = firstTag
+  }
 })
 
 
@@ -48,10 +62,24 @@ const handleTagClick = (tag) => {
       </template>
     </div>
     <div>
-      <PageListItem v-for="page in pageInfo" :item="page" />
+      <PageListItem v-for="page in pageInfo" :key="page.url" :item="page" />
     </div>
   </div>
 </template>
+<style  lang="less">
+.VPHome {
+  padding: 32px 24px 96px;
+  width: 100%;
+
+  @media (min-width: 960px) {
+    padding: 32px 32px 0;
+  }
+
+  @media (min-width: 768px) {
+    padding: 48px 32px 128px;
+  }
+}
+</style>
 <style lang="less" scoped>
 .tags-container {
   width: 800px;

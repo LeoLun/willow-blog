@@ -20,9 +20,9 @@ const getConfig = async () => {
       themeConfig: {
         outlineTitle: '目录',
         pages: await CreatePages(),
-        nav: [
-          { text: '标签', link: '/tags' },
-        ],
+        // nav: [
+        //   { text: '标签', link: '/tags' },
+        // ],
       },
       // your existing vitepress config...
       // optionally, you can pass MermaidConfig

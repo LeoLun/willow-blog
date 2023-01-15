@@ -1,10 +1,10 @@
 <script setup>
-import { useData } from 'vitepress';
+import { useData, useRouter } from 'vitepress';
 import PageListItem from '../components/PageListItem.vue';
+import Tag from '../components/Tag.vue';
 
 const { theme } = useData();
-
-
+const router = useRouter();
 const pageByYear = {};
 
 // 按年份分类
@@ -17,6 +17,22 @@ theme.value.pages.forEach(item => {
     pageByYear[year] = [item]
   }
 })
+
+const tags = {}
+
+theme.value.pages.forEach((item) => {
+  item.tags.forEach((tag) => {
+    if (tags[tag]) {
+      tags[tag]++;
+    } else {
+      tags[tag] = 1;
+    }
+  })
+})
+
+const handleTagClick = (tag) => {
+  router.go(`/willow-blog/tags?tag=${encodeURI(tag)}`)
+}
 
 </script>
 <template>
@@ -34,6 +50,17 @@ theme.value.pages.forEach(item => {
             </path>
           </svg>      
         </a>
+      </div>
+      <div class="tags-container">
+        <template v-for="(value, key) in tags">
+          <Tag
+            v-if="key"
+            class="tag-item"
+            :full="false"
+            @click="handleTagClick(key)">
+            {{ key }} {{value}}
+          </Tag>
+        </template>
       </div>
     </div>
     <div class="content">
@@ -77,6 +104,20 @@ theme.value.pages.forEach(item => {
 
     @media (min-width: 1440px) {
       max-width: 1104px;
+    }
+  }
+
+  .tags-container {
+    display: flex;
+    overflow: hidden;
+    width: 100%;
+    flex-flow: wrap;
+    margin-top: 10px;
+
+    .tag-item {
+      cursor: pointer;
+      margin-bottom: 5px;
+      margin-right: 5px;
     }
   }
 
