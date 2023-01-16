@@ -6,11 +6,15 @@ import Tag from '../components/Tag.vue';
 const { theme } = useData();
 const router = useRouter();
 const pageByYear = {};
-
+const years = []
 // 按年份分类
 theme.value.pages.forEach(item => {
   const time = new Date(item.create);
   const year = time.getFullYear();
+  if (!years.includes(year)) {
+    years.push(year)
+  }
+
   if (pageByYear[year]) {
     pageByYear[year].push(item)
   } else {
@@ -64,27 +68,13 @@ const handleTagClick = (tag) => {
       </div>
     </div>
     <div class="content">
-      <div v-for="(pages, key) in pageByYear" class="item-content">
-        <h1 class="item-year">{{ key }}年</h1>
-        <PageListItem v-for="page in pages" :item="page" />
+      <div v-for="year in years" class="item-content">
+        <h1 class="item-year">{{ year }}年</h1>
+        <PageListItem v-for="page in pageByYear[year]" :item="page" />
       </div>
     </div>
   </div>
 </template>
-<style lang="less">
-.VPHome {
-  padding: 32px 24px 96px;
-  width: 100%;
-
-  @media (min-width: 960px) {
-    padding: 32px 32px 0;
-  }
-
-  @media (min-width: 768px) {
-    padding: 48px 32px 128px;
-  }
-}
-</style>
 <style lang="less" scoped>
 .VPHome {
   .container {
@@ -113,6 +103,7 @@ const handleTagClick = (tag) => {
     width: 100%;
     flex-flow: wrap;
     margin-top: 10px;
+    justify-content: center;
 
     .tag-item {
       cursor: pointer;
@@ -124,14 +115,14 @@ const handleTagClick = (tag) => {
   .aside {
     position: relative;
     display: none;
-    order: 2;
     flex-grow: 1;
-    padding-left: 32px;
+    padding-right: 32px;
     width: 100%;
     max-width: 256px;
     text-align: center;
+    margin-top: -80px;
 
-    @media (min-width: 1280px) {
+    @media (min-width: 960px) {
       display: block;
     }
   }
@@ -140,14 +131,14 @@ const handleTagClick = (tag) => {
     position: relative;
     margin: 0 auto;
     width: 100%;
+    padding: 0 16px 16px;
 
     @media (min-width: 960px) {
       max-width: 752px;
-      padding: 0 32px 128px;
+      padding: 32px 32px 128px;
     }
 
     @media (min-width: 1280px) {
-      order: 1;
       margin: 0;
       min-width: 640px;
     }
@@ -175,7 +166,11 @@ const handleTagClick = (tag) => {
 
 
 .item-content {
-  margin: 16px 0;
+  margin-bottom: 16px;
+
+  &+.item-content {
+    margin-top: 32px;
+  }
 }
 
 .item-year {

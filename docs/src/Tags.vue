@@ -66,20 +66,6 @@ const handleTagClick = (tag) => {
     </div>
   </div>
 </template>
-<style  lang="less">
-.VPHome {
-  padding: 32px 24px 96px;
-  width: 100%;
-
-  @media (min-width: 960px) {
-    padding: 32px 32px 0;
-  }
-
-  @media (min-width: 768px) {
-    padding: 48px 32px 128px;
-  }
-}
-</style>
 <style lang="less" scoped>
 .tags-container {
   width: 800px;

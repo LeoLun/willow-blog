@@ -2,6 +2,7 @@ import { h } from 'vue'
 import DefaultTheme from 'vitepress/theme'
 import PageInfo from '../../components/PageInfo.vue'
 import Tags from '../../components/Tags.vue'
+import Header from '../../components/header.vue'
 
 export default {
   ...DefaultTheme,
@@ -10,7 +11,8 @@ export default {
   },
   Layout() {
     return h(DefaultTheme.Layout, null, {
-      'aside-outline-after': () => h(Tags)
+      'aside-outline-after': () => h(Tags),
+      'layout-top': () => h(Header),
     })
   }
 }
