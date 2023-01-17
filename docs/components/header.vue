@@ -25,7 +25,7 @@
 .header-container {
   position: relative;
   display: none;
-  height: calc(30vh + var(--vp-nav-height));
+  height: calc(30vh);
   background: radial-gradient(ellipse at bottom, #303a49 0, #151628 100%);
   z-index: -1;
   overflow: hidden;
