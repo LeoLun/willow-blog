@@ -1,13 +1,16 @@
 <script setup>
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, onBeforeMount } from 'vue'
 
 const addListener = false
 const imgSrc = ref('');
 
-window.openImageView = (img) => {
-  imgSrc.value = img.src;
-  // 获取节点大小
-}
+
+onBeforeMount(() => {
+  window.openImageView = (img) => {
+    imgSrc.value = img.src;
+    // 获取节点大小
+  }
+})
 
 const containerStyle = computed(()=> {
   return {
