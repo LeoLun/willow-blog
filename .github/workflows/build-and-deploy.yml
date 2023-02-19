@@ -20,7 +20,7 @@ jobs:
       - name: Check out your repository using git
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0
+          fetch-depth: 0 # 这里需要设置为 0, 不然默认只获取一层 git 记录，导致自动生成文章时间失败
 
       - name: Install Node.js
         uses: actions/setup-node@v3

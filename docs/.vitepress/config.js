@@ -13,9 +13,11 @@ const getConfig = async () => {
       description: 'leolun blog',
       outDir: '../dist',
       titleTemplate: 'blog',
+      appearance: 'dark',
       head: [
         ['link', {rel:'icon', type: 'image/svg+xml', href:'/willow-blog/logo.svg'}],
         ['link', {rel:'stylesheet', href:'/willow-blog/index.css'}],
+        ['script', {src:'/willow-blog/index.js'}]
       ],
       themeConfig: {
         outlineTitle: '目录',
