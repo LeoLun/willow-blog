@@ -1,15 +1,20 @@
 <script setup>
-import { ref, computed, watch, onBeforeMount } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 
 const addListener = false
 const imgSrc = ref('');
 
 
-onBeforeMount(() => {
-  window.openImageView = (img) => {
-    imgSrc.value = img.src;
-    // 获取节点大小
-  }
+onMounted(() => {
+  setTimeout(()=>{
+    const images = document.querySelectorAll('img');
+    images.forEach(function (img) {
+      img.style.cursor = 'zoom-in'
+      img.addEventListener('click', () => {
+        imgSrc.value = img.src;
+      })
+    })
+  })
 })
 
 const containerStyle = computed(()=> {

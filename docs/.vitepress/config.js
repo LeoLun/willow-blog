@@ -16,8 +16,7 @@ const getConfig = async () => {
       appearance: 'dark',
       head: [
         ['link', {rel:'icon', type: 'image/svg+xml', href:'/willow-blog/logo.svg'}],
-        ['link', {rel:'stylesheet', href:'/willow-blog/index.css'}],
-        ['script', {src:'/willow-blog/index.js'}]
+        ['link', {rel:'stylesheet', href:'/willow-blog/index.css'}]
       ],
       themeConfig: {
         outlineTitle: '目录',
