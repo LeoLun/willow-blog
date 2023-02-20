@@ -3,23 +3,41 @@ import { ref, computed, watch, onMounted } from 'vue'
 
 const addListener = false
 const imgSrc = ref('');
+const imgWidth = ref(0);
+const imgHeight = ref(0);
 
-
-onMounted(() => {
-  setTimeout(()=>{
-    const images = document.querySelectorAll('img');
-    images.forEach(function (img) {
-      img.style.cursor = 'zoom-in'
-      img.addEventListener('click', () => {
-        imgSrc.value = img.src;
-      })
-    })
-  })
-})
+const openImage = (imgDom) => {
+  const { naturalWidth, naturalHeight } = imgDom;
+  // 获取当前页面大小
+  const { clientWidth, clientHeight } = document.documentElement;
+  const maxWidth = clientWidth * 0.8;
+  const maxHeight = clientHeight * 0.8;
+  let width = naturalWidth;
+  let height = naturalHeight;
+  let scaleWidth = 1;
+  let scaleHeight = 1;
+  if (width > maxWidth) {
+    scaleWidth = maxWidth / width;
+  }
+  if (height > maxHeight) {
+    scaleHeight = maxHeight / height;
+  }
+  const scale = scaleWidth > scaleHeight ? scaleHeight : scaleWidth;
+  imgWidth.value = scale * width;
+  imgHeight.value = scale * height;
+  imgSrc.value = imgDom.src;
+}
 
 const containerStyle = computed(()=> {
   return {
-    display: imgSrc.value ? 'flex' : 'none'
+    display: imgSrc.value ? 'flex' : 'none',
+  }
+})
+
+const imageStyle = computed(() => {
+  return {
+    width: `${imgWidth.value}px`,
+    height: `${imgHeight.value}px`
   }
 })
 
@@ -46,6 +64,18 @@ const handleClose = () => {
   imgSrc.value = ''
 }
 
+onMounted(() => {
+  setTimeout(()=>{
+    const images = document.querySelectorAll('img');
+    images.forEach(function (img) {
+      img.style.cursor = 'zoom-in'
+      img.addEventListener('click', () => {
+        openImage(img)
+      })
+    })
+  })
+})
+
 </script>
 <template>
   <Teleport to="body">
@@ -55,7 +85,7 @@ const handleClose = () => {
       @wheel="handleWheel"
     >
       <div v-if="imgSrc" class="w-image-view-content">
-        <img :src="imgSrc" />
+        <img :src="imgSrc" :style="imageStyle" />
       </div>
       <div v-if="imgSrc" class="w-image-view-mask" @click="handleClose"></div>
     </div>
@@ -92,7 +122,6 @@ const handleClose = () => {
   .w-image-view-content {
     position: absolute;
     z-index: 2;
-    max-width: 80%;
   }
 }
 </style>
