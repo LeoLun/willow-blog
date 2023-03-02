@@ -492,10 +492,9 @@ run();
 ![ci自动化上传](../assets/miniprogram-init/ci-test2.png)
 微信公众平台:
 ![ci自动化上传](../assets/miniprogram-init/ci-test3.png)
-## 7 单元测试配置
-@TODO
+<!-- ## 7 单元测试配置 -->
 
-## 8 github actions 配置
+## 7 github actions 配置
 使用 github actions 管理整个 ci/cd 流程
 ```mermaid
 flowchart TB
