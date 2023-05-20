@@ -503,16 +503,91 @@ flowchart TB
   npm --> eslint[eslint检查]
   eslint --> stylelint[stylelint检查]
   stylelint --> unitTest[单元测试]
-  unitTest --> release{是否发布}
-	release --> |Yes| changelog["自动化生成版本号和changelog"]
-  release --> |No| build["打包、生成二维码"]
-	changelog --> upload["打包、上传代码(使用固定机器人并默认设置为体验版)"]
+  unitTest --> build["打包、生成二维码"]
   build --> qrcode["上传二维码"]
   qrcode --> finish["完成"]
-  upload --> finish
 ```
-### 8.1 添加 yml 文件
 
-### 8.2 使用 github 的密钥管理小程序密钥
+### 7.1 使用 github 的密钥管理小程序密钥
+在 setting -> Secrets and variables -> Actions 中添加密钥
+![添加密钥1](../assets/miniprogram-init/add-secrets.png)
+![添加密钥2](../assets/miniprogram-init/add-secrets2.png)
 
-### 8.3 保存预览二维码
+### 7.2 添加 yml 文件
+新建 .github/workflows/dev-qrcode.yml 文件
+
+```yaml
+name: dev-qrcode
+
+on:
+  # Trigger the workflow every time you push to the `main` branch
+  push:
+    branches: [main]
+  # Allows you to run this workflow manually from the Actions tab on GitHub.
+  workflow_dispatch:
+
+# Allow this job to clone the repo and create a page deployment
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out your repository using git
+        uses: actions/checkout@v3
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 7
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # run check eslint and stylelint
+      - name: Lint
+        run: npm run lint
+
+      # build qrcode
+      - name: Build QRCode
+        env:
+          MINIPROGRAM_PRIVATE: ${{ secrets.MINIPROGRAM_PRIVATE }}
+        run: npm run preview
+
+      # upload qrcode
+      - name: Upload QRCode
+        uses: actions/upload-artifact@v3
+        with:
+          name: qrcode
+          path: cache/qrcode.jpg
+          retention-days: 1
+```
+
+### 7.3 运行 github actions
+![github-actions](../assets/miniprogram-init/github-actions.png)
+
+打开运行成功的 github actions 下载下面 Artifacts 的 qrcode 打开就是小程序的预览二维码了。
