@@ -1,12 +1,14 @@
 <script setup>
 import { useData, useRouter } from 'vitepress';
+import { ref, computed } from 'vue'
 import PageListItem from '../components/PageListItem.vue';
 import Tag from '../components/Tag.vue';
 
 const { theme } = useData();
 const router = useRouter();
+const currentTag = ref('');
 const pageByYear = {};
-const years = []
+const years = [];
 // 按年份分类
 theme.value.pages.forEach(item => {
   const time = new Date(item.create);
@@ -35,8 +37,18 @@ theme.value.pages.forEach((item) => {
 })
 
 const handleTagClick = (tag) => {
-  router.go(`/willow-blog/tags?tag=${encodeURI(tag)}`)
+  if (currentTag.value === tag) {
+    currentTag.value = ''
+  } else {
+    currentTag.value = tag
+  }
 }
+
+const pageInfo = computed(() => {
+  return theme.value.pages.filter((item) => {
+    return item.tags.includes(currentTag.value)
+  })
+});
 
 </script>
 <template>
@@ -60,7 +72,7 @@ const handleTagClick = (tag) => {
           <Tag
             v-if="key"
             class="tag-item"
-            :full="false"
+            :full="key === currentTag"
             @click="handleTagClick(key)">
             {{ key }} {{value}}
           </Tag>
@@ -68,9 +80,13 @@ const handleTagClick = (tag) => {
       </div>
     </div>
     <div class="content">
-      <div v-for="year in years" class="item-content">
+      <div v-if="!currentTag" v-for="year in years" class="item-content">
         <h1 class="item-year">{{ year }}年</h1>
         <PageListItem v-for="page in pageByYear[year]" :item="page" />
+      </div>
+      <div v-else class="item-content">
+        <h1 class="item-tags-title">筛选标签 "{{ currentTag }}"</h1>
+        <PageListItem v-for="page in pageInfo" :key="page.url" :item="page" />
       </div>
     </div>
   </div>
@@ -175,6 +191,11 @@ const handleTagClick = (tag) => {
 
 .item-year {
   font-size: 24px;
+}
+
+.item-tags-title {
+  font-size: 24px;
+  margin-bottom: 24px;
 }
 
 .link-tags {
