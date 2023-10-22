@@ -12,7 +12,7 @@ const getConfig = async () => {
       base: '/willow-blog/',
       lang: 'zh-CN',
       description: 'leolun blog',
-      outDir: '../dist',
+      outDir: './dist',
       titleTemplate: 'blog',
       head: [
         ['link', {rel:'shortcut icon', type: 'image/svg+xml', href:'/willow-blog/logo.svg'}],
