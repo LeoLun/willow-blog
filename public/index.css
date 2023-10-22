@@ -1,0 +1,52 @@
+.VPDocFooter {
+  display: none;
+}
+
+.VPContent {
+  padding-top: 0px !important;
+}
+
+svg[id^="mermaid"] {
+  margin: 16px auto;
+}
+
+img {
+  margin: 16px auto;
+}
+
+@media (min-width: 960px) {
+  .VPNav.no-sidebar {
+    background: transparent !important;
+    backdrop-filter:unset !important;
+  }
+
+  .title {
+    color: var(--vp-button-brand-text) !important;
+  }
+
+  .VPNav {
+    position: absolute !important;
+  }
+
+  .VPNavBar {
+    border-bottom-color: transparent !important;
+    background-color: transparent !important;
+  }
+  
+  .content-body {
+    background-color: transparent !important;
+  }
+  
+  .VPNavBarMenuLink {
+    color: var(--vp-button-brand-text) !important;
+  }
+  
+  .VPNavBarMenuLink.active {
+    color: var(--vp-c-brand-1) !important;
+  }
+
+  .aside-container {
+    position: sticky !important;
+  }
+}
+

@@ -1,12 +1,15 @@
 <script setup>
+import { onMounted } from 'vue'
 import { useData } from 'vitepress';
 import Tag from './Tag.vue';
 
-const { page, theme } = useData();
-const { relativePath } = page.value;
-const { pages } = theme.value;
-const pageInfo = pages.find(item => item.relativePath === relativePath);
-const { tags } = pageInfo
+onMounted(() => {
+  const { page, theme } = useData();
+  const { relativePath } = page.value;
+  const { pages } = theme.value;
+  const pageInfo = pages.find(item => item.relativePath === relativePath);
+  const { tags } = pageInfo
+})
 
 </script>
 <template>

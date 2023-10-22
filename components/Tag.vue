@@ -40,7 +40,7 @@ const clazz = computed(() => {
 }
 
 .tag-full {
-  color: var(--vp-c-text-dark-1);
+  color: var(--vp-button-brand-text);
   background-color: var(--vp-c-brand);
   border-color: var(--vp-c-brand);
 }

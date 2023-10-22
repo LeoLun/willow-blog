@@ -2,7 +2,7 @@
 import { useRouter, useData } from 'vitepress';
 import Tag from './Tag.vue';
 
-const { localePath } = useData();
+const useDataaaaa = useData();
 const router = useRouter()
 
 const props = defineProps({
@@ -31,7 +31,7 @@ const formatTime = (time) => {
 const timeString = formatTime(props.item.create);
 
 const handleOpenPage = () => {
-  router.go(localePath.value + props.item.url);
+  router.go(location.href + props.item.url);
 }
 
 </script>
@@ -56,7 +56,7 @@ const handleOpenPage = () => {
   width: 100%;
   margin: auto;
   padding: 16px 0;
-  border-bottom: 1px solid var(--vp-c-divider-light);
+  border-bottom: 1px solid var(--vp-c-divider);
 }
 
 .page-item-title {

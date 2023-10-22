@@ -11,7 +11,7 @@ export default async () => {
   // https://github.com/Dream4ever/Knowledge-Base/issues/69
 
   const pages = []
-  const rootPath = path.resolve(__dirname, "../../pages");
+  const rootPath = path.resolve(__dirname, "../../docs/pages");
   const files = fs.readdirSync(rootPath);
 
   files.forEach(fileName => {
@@ -31,8 +31,8 @@ export default async () => {
       pages.push({
         title: data.title || '',
         tags: data.tags ? data.tags.split(',') : [],
-        relativePath: `pages/${fileName}`,
-        url: `pages/${fileName.slice(0, -3)}`,
+        relativePath: `docs/pages/${fileName}`,
+        url: `docs/pages/${fileName.slice(0, -3)}`,
         create: (new Date(create)).getTime(),
         update: (new Date(update)).getTime()
       })

@@ -5,12 +5,12 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "type": "node", // 调试器类型，我们是 Node.js 环境
-      "request": "launch", // 请求方式，有 launch(启动) 和 attach(附加) 两种
-      "name": "Launch via NPM", // 启动配置名称
-      "runtimeExecutable": "npm", // 任务运行工具，'npm', 'mocha', 'gulp' 等
-      "runtimeArgs": ["run-script", "docs:dev"], // 传递给执行工具的可选参数
-      "skipFiles": ["<node_internals>/**/*.js"], // 跳过所有 Node.js 的内置模块
+      "type": "node",
+      "request": "launch",
+      "name": "Launch via NPM",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["run-script", "docs:dev"],
+      "skipFiles": ["<node_internals>/**/*.js"],
     },
     {
       "type": "chrome",
