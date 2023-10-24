@@ -6,7 +6,8 @@ const data = useData()
 
 const handleGameClick = (key) => {
   const base = data.site.value.base;
-  router.go(`${location.origin}${base}game?id=${key}`);
+  // router.go(`${location.origin}${base}game?id=${key}`);
+  location.href = `${location.origin}${base}game?id=${key}`;
 }
 </script>
 <template>
