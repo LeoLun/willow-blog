@@ -1,7 +1,9 @@
 <script setup>
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useData } from 'vitepress';
 import Tag from './Tag.vue';
+
+const pageTags = ref()
 
 onMounted(() => {
   const { page, theme } = useData();
@@ -9,12 +11,13 @@ onMounted(() => {
   const { pages } = theme.value;
   const pageInfo = pages.find(item => item.relativePath === relativePath);
   const { tags } = pageInfo
+  pageTags.value = tags
 })
 
 </script>
 <template>
-  <div v-if="tags && tags.length" class="tags-container">
-    <template v-for="tag in tags">
+  <div v-if="pageTags && pageTags.length" class="tags-container">
+    <template v-for="tag in pageTags">
       <Tag v-if="tag" class="tag-item">{{tag}}</Tag>
     </template>
   </div>
