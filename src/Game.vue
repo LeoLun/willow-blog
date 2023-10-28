@@ -1,10 +1,8 @@
 <script setup>
-import { onMounted, defineAsyncComponent, ref } from 'vue';
-
+import { onMounted, ref } from 'vue';
 import { WebComponent } from "./libs/asyncComponent.js"
 
 const currentComponent = ref();
-
 
 onMounted(() => {
   currentComponent.value = WebComponent
@@ -32,6 +30,6 @@ const handleKeydown = (event) => {
 .wasm-content {
   margin-top: 30px;
   width: 1180px;
-  height: auto;
+  height: 664px;
 }
 </style>
