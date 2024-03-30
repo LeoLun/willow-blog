@@ -22,6 +22,10 @@ img {
   margin: 16px auto;
 }
 
+.divider {
+  display: none;
+}
+
 @media (min-width: 960px) {
   .VPNav.no-sidebar {
     background: transparent !important;
